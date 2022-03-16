@@ -16,6 +16,7 @@
                 </template>
               </a-input>
             </a-form-item>
+
             <a-form-item>
               <a-input placeholder="密 码" type="password" size="large">
                 <template #prefix>
@@ -23,11 +24,26 @@
                 </template>
               </a-input>
             </a-form-item>
+
+            <a-form-item>
+              <a-input-group size="large" >
+                <a-row type="flex" justify="space-between">
+                  <a-col :span="12">
+                    <a-input placeholder=""/>
+                  </a-col>
+                  <a-col :span="8">
+                    <a-input />
+                  </a-col>
+                </a-row>
+              </a-input-group>
+            </a-form-item>
+
+
           </a-form>
         </a-tab-pane>
-        
+
         <a-tab-pane key="2" tab="手机号登录" force-render>
-            <a-form ref="formRef">
+          <a-form ref="formRef">
             <a-form-item>
               <a-input placeholder="手机号" size="large">
                 <template #prefix>
@@ -51,7 +67,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { UserOutlined, LockOutlined, TabletOutlined,MailOutlined  } from '@ant-design/icons-vue';
+import { UserOutlined, LockOutlined, TabletOutlined, MailOutlined } from '@ant-design/icons-vue';
 
 const activeKey = ref('1');
 </script>
