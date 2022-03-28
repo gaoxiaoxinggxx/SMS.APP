@@ -10,6 +10,6 @@ npm install sass --save-dev
 npm install ant-design-vue@next --save
 # 安装vue-router  4.0 版本以上的
 npm install vue-router@4
-
+# 安装less  4.0 版本以上的
 npm install less@4.1.2 --save-dev
 npm install less-loader@10.2.0 --save-dev

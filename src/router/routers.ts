@@ -10,6 +10,8 @@
  * 4. 如果分组子菜单多于一个，那么需要设置meta.title
  */
 import { RouteRecordRaw } from "vue-router";
+// import { BasicLayout } from "../layouts/BasicLayout.vue"
+import { BasicLayout } from "../layouts/BasicLayout.vue"
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -29,5 +31,20 @@ export const routes: RouteRecordRaw[] = [
       title: "",
       layout: false,
     },
-  }
+  },
+  {
+    path: "/user",
+    component: BasicLayout,
+    redirect: "/user/changePassword",
+    children: [
+      {
+        path: "changePassword",
+        name: "user",
+        component: () => import("../views/user/changePassword.vue"),
+        meta: {
+          title: "Change Password",
+        },
+      },
+    ],
+  },
 ];
