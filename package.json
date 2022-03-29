@@ -1,14 +1,21 @@
 {
   "name": "sms-app",
-  "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-client": "nswag swagger2tsclient /input:%npm_package_config_smsClient_input% /output:%npm_package_config_smsClient_output%"
+  },
+  "config": {
+    "smsClient": {
+      "input": "https://localhost:5001/swagger/Auth/swagger.json",
+      "output": "src/api/smsClient.ts"
+    }
   },
   "dependencies": {
     "ant-design-vue": "^2.2.8",
+    "nswag": "^13.13.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.13"
   },

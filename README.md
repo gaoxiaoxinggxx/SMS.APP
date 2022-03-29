@@ -13,3 +13,6 @@ npm install vue-router@4
 # 安装less  4.0 版本以上的
 npm install less@4.1.2 --save-dev
 npm install less-loader@10.2.0 --save-dev
+# 安装nswag @13.13.2
+npm install nswag@13.13.2 --save-dev
+注意： 使用config 个别文档用的是 devConfig异常

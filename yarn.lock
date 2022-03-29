@@ -769,6 +769,11 @@
   "resolved" "https://registry.npmmirror.com/normalize-path/-/normalize-path-3.0.0.tgz"
   "version" "3.0.0"
 
+"nswag@^13.13.2":
+  "integrity" "sha512-L3Jraa8Ml7KKSBAcjvdo+suDT2HxgpQ0S3uaK29P3b40n3GPY/c0VrfjsQqDPfb0zjKri0F4xby6/6meUNwPMw=="
+  "resolved" "https://registry.npmmirror.com/nswag/-/nswag-13.13.2.tgz"
+  "version" "13.13.2"
+
 "object-assign@^4.1.1":
   "integrity" "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="
   "resolved" "https://registry.npmmirror.com/object-assign/-/object-assign-4.1.1.tgz"

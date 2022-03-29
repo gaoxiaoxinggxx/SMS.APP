@@ -10,8 +10,7 @@
  * 4. 如果分组子菜单多于一个，那么需要设置meta.title
  */
 import { RouteRecordRaw } from "vue-router";
-// import { BasicLayout } from "../layouts/BasicLayout.vue"
-import { BasicLayout } from "../layouts/BasicLayout.vue"
+import  BasicLayout  from "../layouts/BasicLayout.vue"
 
 export const routes: RouteRecordRaw[] = [
   {

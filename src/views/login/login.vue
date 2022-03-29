@@ -56,15 +56,26 @@
         </span>
       </div>
 
-      <a-button size="large" type="primary" class="login-btn" block>登 录</a-button>
+      <a-button size="large" type="primary" class="login-btn" @click="login"  block>登 录</a-button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
 import { UserOutlined, LockOutlined, TabletOutlined, MailOutlined } from '@ant-design/icons-vue';
+import { useRouter } from "vue-router";
+import { _API } from '../../api';
+const router = useRouter();
 const activeKey = ref('1');
 const isChecked = ref<boolean>(false);
+
+const login = async ()=>{
+  var result = await _API.sms.authClient.auth();
+  if(result){
+    router.push({path:"/user"});
+  }
+}
+
 
 </script>
 <style lang="scss">
