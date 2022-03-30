@@ -1,3 +1,3 @@
 <template>
-123456789
+注册
 </template>

@@ -1,12 +1,6 @@
 <template>
   <div class="main">
-    <div class="top">
-       <!-- <img :src="logo" class="logo" />
-      <div class="title">Online Marking Test Day Operation Portal</div> -->
-    </div>
     <div class="card">
-      <div class="title">Ant Design</div>
-
       <a-tabs v-model:activeKey="activeKey" style="text-align: center;">
         <a-tab-pane key="1" tab="用户密码登录">
           <a-form ref="formRef">
@@ -52,7 +46,7 @@
       <div class="check-box-login">
         <span>
            <a-checkbox v-model:checked="isChecked">自动登录</a-checkbox>
-           <a href="" style="float: right;">忘记密码</a>
+           <a href="" style="float: right;">忘记密码?</a>
         </span>
       </div>
 
@@ -72,7 +66,7 @@ const isChecked = ref<boolean>(false);
 const login = async ()=>{
   var result = await _API.sms.authClient.auth();
   if(result){
-    router.push({path:"/user"});
+    router.push({name:"changePassword"});
   }
 }
 
@@ -96,10 +90,8 @@ body{
     }
   }
   .card {
-    width: 470px;
     border-radius: 5px;
     margin: 0px auto;
-    padding: 50px;
     .title {
       margin-bottom: 20px;
       text-align: center;

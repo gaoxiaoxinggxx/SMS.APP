@@ -11,34 +11,52 @@
  */
 import { RouteRecordRaw } from "vue-router";
 import  BasicLayout  from "../layouts/BasicLayout.vue"
+import UserLayout from '../layouts/UserLayout.vue'
 
 export const routes: RouteRecordRaw[] = [
-  {
-    path: "/login",
-    name: "login",
-    component: () => import("../views/login/login.vue"),
-    meta: {
-      title: "",
-      layout: false,
-      allowAnonymous: true,
-    },
-  },
+  // {
+  //   path: "/login",
+  //   name: "login",
+  //   component: () => import("../views/login/login.vue"),
+  //   meta: {
+  //     title: "",
+  //     layout: false,
+  //     allowAnonymous: true,
+  //   },
+  // },
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/user/login",
     meta: {
       title: "",
-      layout: false,
+      // layout: false,
     },
   },
   {
+    name:"login",
+    path: "/user",
+    component: UserLayout,
+    redirect: "/user/login",
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: () => import("../views/user/login.vue"),
+        meta: {
+          title: "login",
+        },
+      },
+    ],
+  },
+  {
+    name:"changePassword",
     path: "/user",
     component: BasicLayout,
     redirect: "/user/changePassword",
     children: [
       {
         path: "changePassword",
-        name: "user",
+        name: "changePassword",
         component: () => import("../views/user/changePassword.vue"),
         meta: {
           title: "Change Password",
