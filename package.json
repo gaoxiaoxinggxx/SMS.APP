@@ -9,7 +9,7 @@
   },
   "config": {
     "smsClient": {
-      "input": "https://localhost:5001/swagger/Auth/swagger.json",
+      "input": "https://localhost:5001/swagger/App/swagger.json",
       "output": "src/api/smsClient.ts"
     }
   },

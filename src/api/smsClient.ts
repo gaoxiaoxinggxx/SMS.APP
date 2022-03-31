@@ -68,6 +68,134 @@ export class AuthClient {
     }
 }
 
+export class UserClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : <any>window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001/";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createUser(body: CreateAdminUserRequest | undefined): Promise<boolean> {
+        let url_ = this.baseUrl + "/api/User/create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateUser(_response);
+        });
+    }
+
+    protected processCreateUser(response: Response): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            return throwException("BadRequest", status, _responseText, _headers);
+            });
+        } else if (status === 500) {
+            return response.text().then((_responseText) => {
+            return throwException("ServerError", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<boolean>(<any>null);
+    }
+}
+
+export class CreateAdminUserRequest implements ICreateAdminUserRequest {
+    name?: string | undefined;
+    email?: string | undefined;
+    status?: UserStatusEnum;
+    role?: UserRoleEnum;
+    passWord?: string | undefined;
+
+    constructor(data?: ICreateAdminUserRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.email = _data["email"];
+            this.status = _data["status"];
+            this.role = _data["role"];
+            this.passWord = _data["passWord"];
+        }
+    }
+
+    static fromJS(data: any): CreateAdminUserRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateAdminUserRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["email"] = this.email;
+        data["status"] = this.status;
+        data["role"] = this.role;
+        data["passWord"] = this.passWord;
+        return data; 
+    }
+}
+
+export interface ICreateAdminUserRequest {
+    name?: string | undefined;
+    email?: string | undefined;
+    status?: UserStatusEnum;
+    role?: UserRoleEnum;
+    passWord?: string | undefined;
+}
+
+export enum UserRoleEnum {
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+}
+
+export enum UserStatusEnum {
+    _1 = 1,
+    _2 = 2,
+}
+
 export class ApiException extends Error {
     message: string;
     status: number;
