@@ -1,4 +1,4 @@
 {
-    "smsApiUrl": "https://localhost:44378",
+    "smsApiUrl": "https://localhost:5001",
     "smsApiUrl1": "https://localhost:44378"
   }

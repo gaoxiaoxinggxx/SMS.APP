@@ -19,15 +19,20 @@ export class AuthClient {
 
     /**
      * 鉴权
+     * @param body (optional) 
      * @return Success
      */
-    auth(): Promise<boolean> {
+    auth(body: UserAuthRequest | undefined): Promise<UserAuthResponse> {
         let url_ = this.baseUrl + "/api/Auth/auth";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
         let options_ = <RequestInit>{
+            body: content_,
             method: "POST",
             headers: {
+                "Content-Type": "application/json",
                 "Accept": "text/plain"
             }
         };
@@ -37,14 +42,14 @@ export class AuthClient {
         });
     }
 
-    protected processAuth(response: Response): Promise<boolean> {
+    protected processAuth(response: Response): Promise<UserAuthResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = UserAuthResponse.fromJS(resultData200);
             return result200;
             });
         } else if (status === 401) {
@@ -64,7 +69,7 @@ export class AuthClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<boolean>(<any>null);
+        return Promise.resolve<UserAuthResponse>(<any>null);
     }
 }
 
@@ -79,6 +84,7 @@ export class UserClient {
     }
 
     /**
+     * 创建用户
      * @param body (optional) 
      * @return Success
      */
@@ -130,6 +136,56 @@ export class UserClient {
             });
         }
         return Promise.resolve<boolean>(<any>null);
+    }
+
+    /**
+     * 获取当前用户信息
+     * @return Success
+     */
+    getCurrentInfo(): Promise<CurrentUserResponse> {
+        let url_ = this.baseUrl + "/api/User/current";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "POST",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetCurrentInfo(_response);
+        });
+    }
+
+    protected processGetCurrentInfo(response: Response): Promise<CurrentUserResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CurrentUserResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            return throwException("BadRequest", status, _responseText, _headers);
+            });
+        } else if (status === 500) {
+            return response.text().then((_responseText) => {
+            return throwException("ServerError", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<CurrentUserResponse>(<any>null);
     }
 }
 
@@ -183,6 +239,130 @@ export interface ICreateAdminUserRequest {
     status?: UserStatusEnum;
     role?: UserRoleEnum;
     passWord?: string | undefined;
+}
+
+export class CurrentUserResponse implements ICurrentUserResponse {
+    name?: string | undefined;
+    email?: string | undefined;
+    role?: UserRoleEnum;
+
+    constructor(data?: ICurrentUserResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.email = _data["email"];
+            this.role = _data["role"];
+        }
+    }
+
+    static fromJS(data: any): CurrentUserResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new CurrentUserResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["email"] = this.email;
+        data["role"] = this.role;
+        return data; 
+    }
+}
+
+export interface ICurrentUserResponse {
+    name?: string | undefined;
+    email?: string | undefined;
+    role?: UserRoleEnum;
+}
+
+export class UserAuthRequest implements IUserAuthRequest {
+    name?: string | undefined;
+    password?: string | undefined;
+
+    constructor(data?: IUserAuthRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): UserAuthRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserAuthRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["password"] = this.password;
+        return data; 
+    }
+}
+
+export interface IUserAuthRequest {
+    name?: string | undefined;
+    password?: string | undefined;
+}
+
+export class UserAuthResponse implements IUserAuthResponse {
+    token?: string | undefined;
+    data?: any | undefined;
+
+    constructor(data?: IUserAuthResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.token = _data["token"];
+            this.data = _data["data"];
+        }
+    }
+
+    static fromJS(data: any): UserAuthResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserAuthResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["token"] = this.token;
+        data["data"] = this.data;
+        return data; 
+    }
+}
+
+export interface IUserAuthResponse {
+    token?: string | undefined;
+    data?: any | undefined;
 }
 
 export enum UserRoleEnum {

@@ -17,7 +17,9 @@
     "ant-design-vue": "^2.2.8",
     "nswag": "^13.13.2",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vuex": "^4.0.2",
+    "vuex-module-decorators": "^2.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",

@@ -39,8 +39,9 @@ fetchInterceptor.interceptors.push(
       if (response.status == 503) {
         notification.warning({ message: "Service unavailable" });
       }
-      if (response.status == 400 || response.status == 401 || response.status == 500) {
-        notification.warning({ message: JSON.parse(await response.text()).message });
+      if (response.status == 400 || response.status == 500) {
+        notification.warning({ message: "Service Error" });
+        //notification.warning({ message: JSON.parse(await response.text()).message });
       }
       if (response.status == 401) {
         router.push({ name: "login" });
