@@ -14,6 +14,7 @@
     }
   },
   "dependencies": {
+    "@microsoft/signalr": "^6.0.3",
     "ant-design-vue": "^2.2.8",
     "nswag": "^13.13.2",
     "vue": "^3.2.25",
