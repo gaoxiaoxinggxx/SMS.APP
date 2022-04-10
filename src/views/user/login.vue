@@ -62,6 +62,9 @@ import { _API } from '../../api';
 import { UserAuthRequest } from '../../api/smsClient';
 import useForm from 'ant-design-vue/lib/form/useForm';
 import {UserModule} from '../../store/modules/user'
+import {onMounted,onUnmounted} from 'vue'
+import { HubConnectionState } from '@microsoft/signalr';
+import hubConnection from '../../util/signalRUitl';
 
 const router = useRouter();
 const activeKey = ref('1');
@@ -74,15 +77,29 @@ const rulesRef = ref({
   });
 const { validate, validateInfos } = useForm(authInfo.value, rulesRef.value);
 
+onMounted(async ()=>{
+  if(hubConnection.state != HubConnectionState.Connected){
+    await hubConnection.start();
+    console.info('started signalR...');
+  }
+  hubConnection.on('candidateDisconnected', async (name:string) => {
+      console.log('candidateDisconnected 触发了',name);
+  });
+})
+
+onUnmounted(()=>{
+  hubConnection?.off('candidateDisconnected');
+  console.info('off candidateDisconnected event.');
+})
 const login = async ()=>{
   const req = await validate<UserAuthRequest>();
   try{
     loginLoading.value = true;
    
     UserModule.login(req);
-    UserModule.setUserDetail();
+    //UserModule.setUserDetail();
 
-    router.push({name:"changePassword"});
+    //router.push({name:"changePassword"});
   }finally{
     loginLoading.value = false;
   }
