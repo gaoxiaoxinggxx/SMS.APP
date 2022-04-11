@@ -14,19 +14,9 @@ import  BasicLayout  from "../layouts/BasicLayout.vue"
 import UserLayout from '../layouts/UserLayout.vue'
 
 export const routes: RouteRecordRaw[] = [
-  // {
-  //   path: "/login",
-  //   name: "login",
-  //   component: () => import("../views/login/login.vue"),
-  //   meta: {
-  //     title: "",
-  //     layout: false,
-  //     allowAnonymous: true,
-  //   },
-  // },
   {
     path: "/",
-    redirect: "/user/login",
+    redirect: "/auth/login",
     meta: {
       title: "",
       // layout: false,
@@ -34,14 +24,14 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     name:"login",
-    path: "/user",
+    path: "login",
     component: UserLayout,
-    redirect: "/user/login",
+    redirect: "/auth/login",
     children: [
       {
         path: "login",
         name: "login",
-        component: () => import("../views/user/login.vue"),
+        component: () => import("../views/auth/login/index.vue"),
         meta: {
           title: "login",
         },
@@ -50,14 +40,14 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     name:"changePassword",
-    path: "/user",
+    path: "changePassword",
     component: BasicLayout,
-    redirect: "/user/changePassword",
+    redirect: "/auth/changePassword",
     children: [
       {
         path: "changePassword",
         name: "changePassword",
-        component: () => import("../views/user/changePassword.vue"),
+        component: () => import("../views/auth/changePassword/index.vue"),
         meta: {
           title: "Change Password",
         },

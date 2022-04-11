@@ -5,46 +5,34 @@
       <div class="logo" />
       <!-- left-menu -->
       <a-menu theme="dark" v-model:selectedKeys="selectedKeys" mode="inline">
-        <a-menu-item key="1">
-          <pie-chart-outlined />
-          <span>Option 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <desktop-outlined />
-          <span>Option 2</span>
-        </a-menu-item>
         <a-sub-menu key="sub1">
           <template #title>
             <span>
               <user-outlined />
-              <span>User</span>
+              <span>用戶中心</span>
             </span>
           </template>
-          <a-menu-item key="3">Tom</a-menu-item>
-          <a-menu-item key="4">Bill</a-menu-item>
-          <a-menu-item key="5">Alex</a-menu-item>
+          <a-menu-item key="3">用戶列表</a-menu-item>
+          <a-menu-item key="4">個人中心</a-menu-item>
+          <a-menu-item key="5">用戶詳情</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
           <template #title>
             <span>
               <team-outlined />
-              <span>Team</span>
+              <span>調度中心</span>
             </span>
           </template>
-          <a-menu-item key="6">Team 1</a-menu-item>
-          <a-menu-item key="8">Team 2</a-menu-item>
+          <a-menu-item key="6">定時任務</a-menu-item>
+          <a-menu-item key="8">延時任務</a-menu-item>
         </a-sub-menu>
-        <a-menu-item key="9">
-          <file-outlined />
-          <span>File</span>
-        </a-menu-item>
       </a-menu>
     </a-layout-sider>
 
     <a-layout>
       <!-- right-header -->
       <a-layout-header style="background: #fff; padding: 0">
-        <BasicLayoutHeaderVue/>
+        <BasicLayoutHeaderVue :toggleCollapsed="toggleCollapsed"/>
       </a-layout-header>
       <!-- right-content -->
       <a-layout-content style="margin: 0 16px">
@@ -71,6 +59,10 @@ import BasicLayoutHeaderVue from './BasicLayoutHeader.vue';
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
+
+const toggleCollapsed = ()=>{
+  collapsed.value = !collapsed.value;
+}
 
 </script>
 <style lang="scss" scoped>

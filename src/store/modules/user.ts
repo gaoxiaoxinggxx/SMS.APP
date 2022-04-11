@@ -57,11 +57,11 @@ class User extends VuexModule implements IUserState {
     await this.SET_USER_DETAIL(userDetail);
   }
 
-  public get getExaminer() {
+  public get getUserInfo() {
     if (!this.userInfo) {
-      let storageExaminer = localStorage.getItem("userInfo");
-      if (storageExaminer) {
-        let jsonItem = JSON.parse(storageExaminer);
+      let storageUserInfo = localStorage.getItem("userInfo");
+      if (storageUserInfo) {
+        let jsonItem = JSON.parse(storageUserInfo);
         UserModule.SET_USER_DETAIL(jsonItem);
         // this.examinerDetail = jsonItem;
       }
