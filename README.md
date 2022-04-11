@@ -16,11 +16,8 @@ npm install less-loader@10.2.0 --save-dev
 # 安装nswag @13.13.2
 npm install nswag@13.13.2 --save-dev
 注意： 使用config 个别文档用的是 devConfig异常
-<<<<<<< Updated upstream
 # 安装Vuex
 npm install vuex@next --save
 npm install vuex-module-decorators --save 
-=======
 # 安装 Signalr
 npm install @microsoft/signalr
->>>>>>> Stashed changes

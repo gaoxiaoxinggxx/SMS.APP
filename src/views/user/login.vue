@@ -97,7 +97,7 @@ const login = async ()=>{
     loginLoading.value = true;
    
     UserModule.login(req);
-    //UserModule.setUserDetail();
+    UserModule.setUserDetail();
 
     //router.push({name:"changePassword"});
   }finally{
