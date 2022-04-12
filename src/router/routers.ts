@@ -42,6 +42,14 @@ export const routes: RouteRecordRaw[] = [
           title: "Change Password",
         },
       },
+      {
+        name:"userList",
+        path:"/userList",
+        component:()=>import("../views/user/userList/index.vue"),
+        meta: {
+          title: "Change Password",
+        }
+      }
     ],
   },
 ];

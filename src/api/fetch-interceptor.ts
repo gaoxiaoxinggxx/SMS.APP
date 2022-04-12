@@ -1,5 +1,6 @@
 import { notification } from "ant-design-vue";
 import { router } from "../router";
+import { appConfig } from '../util/appConfig';
 
 export class FetchInterceptor {
   public interceptors: any[] = [];
@@ -51,8 +52,12 @@ fetchInterceptor.interceptors.push(
   }
 );
 window.fetch = ((fetch) => {
-  return (input: RequestInfo, init?: RequestInit | undefined) => {
-    init = Object.assign({}, init, { credentials: "include" });
-    return fetchInterceptor.interceptor(fetch, { input, init });
+  return (input: RequestInfo | string, init?: RequestInit | undefined) => {
+    if (input.toString().startsWith(<string>appConfig.smsApiUrl)) {
+      init = Object.assign({}, init, { credentials: "include" });
+      return fetchInterceptor.interceptor(fetch, { input, init });
+    }
+
+    return fetch(input, init);
   };
 })(window.fetch);
