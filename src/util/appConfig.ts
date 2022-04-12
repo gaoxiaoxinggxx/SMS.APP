@@ -1,5 +1,6 @@
 export class AppConfig {
     public smsApiUrl?: string;
+    public signalRUrl?: string;
   }
   
   export let appConfig = new AppConfig();

@@ -16,21 +16,12 @@ import UserLayout from '../layouts/UserLayout.vue'
 export const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: "/auth/login",
-    meta: {
-      title: "",
-      // layout: false,
-    },
-  },
-  {
-    name:"login",
-    path: "login",
+    redirect:"/login",
     component: UserLayout,
-    redirect: "/auth/login",
     children: [
       {
-        path: "login",
         name: "login",
+        path: "/login",
         component: () => import("../views/auth/login/index.vue"),
         meta: {
           title: "login",
@@ -39,14 +30,13 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    name:"changePassword",
-    path: "changePassword",
+    path: "/changePassword",
     component: BasicLayout,
-    redirect: "/auth/changePassword",
+    redirect: "/changePassword",
     children: [
       {
-        path: "changePassword",
         name: "changePassword",
+        path: "/changePassword",
         component: () => import("../views/auth/changePassword/index.vue"),
         meta: {
           title: "Change Password",

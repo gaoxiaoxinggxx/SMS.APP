@@ -1,4 +1,5 @@
 {
     "smsApiUrl": "https://localhost:44378",
-    "smsApiUrl1": "https://localhost:44378"
+    "smsApiUrl1": "https://localhost:44378",
+    "signalRUrl":"wss://localhost:44378"
   }
